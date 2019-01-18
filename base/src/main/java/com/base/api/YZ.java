@@ -1,4 +1,4 @@
-package com.base.api.api;
+package com.base.api;
 
 import android.content.Context;
 
@@ -7,10 +7,21 @@ import com.android.volley.toolbox.Volley;
 import com.base.api.RestfulRequest.AppRequestQueue;
 import com.base.api.RestfulRequest.AuthenticatedRequestBase;
 
-public class YZ {
+public class YZ implements AppRequestQueue {
     private static final int DEFAULT_VOLLEY_CACHE_SIZE = 100 * 1024 * 1024;
+    private Context context;
+    private int cacheSize;
 
     private YZ() {
+    }
+
+    @Override
+    public RequestQueue getRequestQueue() {
+        return Volley.newRequestQueue(context, cacheSize);
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     private static class SingletonHolder {
@@ -35,12 +46,8 @@ public class YZ {
      * @param cacheSize
      */
     public void init(final Context appContext, final int cacheSize) {
-        AuthenticatedRequestBase.setAppRequestQueue(new AppRequestQueue() {
-            @Override
-            public RequestQueue getRequestQueue() {
-                return Volley.newRequestQueue(appContext, cacheSize);
-            }
-        });
+        this.context = appContext;
+        this.cacheSize = cacheSize;
     }
 
 

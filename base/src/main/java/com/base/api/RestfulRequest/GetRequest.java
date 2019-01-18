@@ -1,5 +1,6 @@
 package com.base.api.RestfulRequest;
 
+import android.os.Handler;
 import android.util.Log;
 
 import com.android.volley.NetworkResponse;
@@ -7,9 +8,11 @@ import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.base.untils.NetUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
 import static com.android.volley.toolbox.HttpHeaderParser.parseCacheHeaders;
@@ -31,8 +34,8 @@ public class GetRequest<TResponse> extends AuthenticatedRequestBase<TResponse> {
         this.mUrl = url;
         this.cb = callback;
 
-       /* //无网络时300ms后返回callback
-        if (!NetUtils.isConnect(BaseApp.getContext()) && BaseApp.getRequestQueue().getCache().get(url) == null) {
+        //无网络时300ms后返回callback
+        if (!NetUtils.isConnect(mContext) && mRequestQueue.getCache().get(url) == null) {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -40,7 +43,7 @@ public class GetRequest<TResponse> extends AuthenticatedRequestBase<TResponse> {
                     cb.OnNetworkOff();
                 }
             }, 300);
-        }*/
+        }
     }
 
     @Override
@@ -52,20 +55,14 @@ public class GetRequest<TResponse> extends AuthenticatedRequestBase<TResponse> {
     @Override
     protected Response<TResponse> parseNetworkResponse(NetworkResponse response) {
         Gson gson = new Gson();
-      /*  //下面
-        if (clazz.equals(Serializable[].class) || clazz.equals(Serializable.class)) {
-            Log.d(TAG, "Passed in Clazz is Serializable[].class");
-            gson = GsonUtils.instanceForNotificationModel();
-        }
 
         //无网络时，使用本地缓存
-        if (!NetUtils.isConnect(BaseApp.getContext()) && BaseApp.getRequestQueue().getCache().get(mUrl) != null) {
-            String json = new String(BaseApp.getRequestQueue().getCache().get(mUrl).data);
+        if (!NetUtils.isConnect(mContext) && mRequestQueue.getCache().get(mUrl) != null) {
+            String json = new String(mRequestQueue.getCache().get(mUrl).data);
             Log.d(TAG, "url==" + mUrl + ",json" + json);
             cb.fResponseCacheStatus = ResponseCacheStatus.StaleFromCache;
             return Response.success(gson.fromJson(json, clazz), parseCacheHeaders(response));
         }
-*/
         //数据是否有更新
         try {
             if (response.statusCode == 304) {

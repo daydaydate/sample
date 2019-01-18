@@ -1,6 +1,7 @@
 package com.base.api.RestfulRequest;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.CallSuper;
@@ -10,8 +11,10 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.base.api.YZ;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +29,8 @@ public abstract class AuthenticatedRequestBase<T> extends Request<T> {
     private static final int TIME_OUT = 30000;
     private static final int MAX_RETRIES = 1;
     private static final float BACKOFF_MULT = 2f;
-    private static AppRequestQueue appRequestQueue;
+    protected Context mContext;
+    protected RequestQueue mRequestQueue;
 
     @SuppressLint("LongLogTag")
     public AuthenticatedRequestBase(int method, String url, boolean cache, Response.ErrorListener errorListener) {
@@ -37,12 +41,19 @@ public abstract class AuthenticatedRequestBase<T> extends Request<T> {
                 MAX_RETRIES,
                 BACKOFF_MULT));
 
-        if (appRequestQueue == null)
-            throw new IllegalArgumentException("appRequestQueue can't be null");
+        mRequestQueue = YZ.getInstance().getRequestQueue();
+        if (mRequestQueue == null) {
+            throw new IllegalArgumentException("mRequestQueue can't be null");
+        }
+
+        mContext = YZ.getInstance().getContext();
+        if (mContext == null) {
+            throw new IllegalArgumentException("mContext can't be null");
+        }
 
         //如果重新发出服务器请求的时候，需要清除之前的缓存。
         if (!cache) {
-            Cache volleyCache = appRequestQueue.getRequestQueue().getCache();
+            Cache volleyCache = mRequestQueue.getCache();
             Cache.Entry cacheEntry = volleyCache.get(url);
 
             if (cacheEntry != null) {
@@ -50,22 +61,7 @@ public abstract class AuthenticatedRequestBase<T> extends Request<T> {
                 Log.d(TAG, "remove volley cache:" + url);
             }
         }
-
-        appRequestQueue.getRequestQueue().add(this);
-    }
-
-    public static void setAppRequestQueue(AppRequestQueue appRequestQueue) {
-        AuthenticatedRequestBase.appRequestQueue = appRequestQueue;
-    }
-
-    /**
-     * PUT,POST method is need
-     *
-     * @return
-     */
-    @Override
-    public String getBodyContentType() {
-        return "application/vnd.fht360.enumAsString+json";
+        mRequestQueue.add(this);
     }
 
 

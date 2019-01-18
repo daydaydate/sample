@@ -4,10 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.aiidayang.BuildConfig;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.base.api.RestfulRequest.AppRequestQueue;
-import com.base.api.api.YZ;
+import com.base.api.YZ;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
