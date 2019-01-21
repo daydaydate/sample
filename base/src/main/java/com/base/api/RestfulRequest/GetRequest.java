@@ -27,6 +27,7 @@ public class GetRequest<TResponse> extends AuthenticatedRequestBase<TResponse> {
     private NetCallback<TResponse> cb;
     private boolean cacheHit;
 
+
     public GetRequest(String url, Class<TResponse> clazz, boolean cache, NetCallback<TResponse> callback) {
         super(Request.Method.GET, url, cache, callback.getErrorListener());
         this.listener = callback.getSuccessListener();
@@ -46,6 +47,10 @@ public class GetRequest<TResponse> extends AuthenticatedRequestBase<TResponse> {
         }
     }
 
+    /**
+     * 这个是缓存的标记，与本地缓存相关
+     * @param tag
+     */
     @Override
     public void addMarker(String tag) {
         super.addMarker(tag);
@@ -56,21 +61,25 @@ public class GetRequest<TResponse> extends AuthenticatedRequestBase<TResponse> {
     protected Response<TResponse> parseNetworkResponse(NetworkResponse response) {
         Gson gson = new Gson();
 
-        //无网络时，使用本地缓存
+        //无网络时，使用本地缓存,通过url去匹配缓存，volley sdk是通过url创建不同的文件来实现缓存的
         if (!NetUtils.isConnect(mContext) && mRequestQueue.getCache().get(mUrl) != null) {
             String json = new String(mRequestQueue.getCache().get(mUrl).data);
             Log.d(TAG, "url==" + mUrl + ",json" + json);
             cb.fResponseCacheStatus = ResponseCacheStatus.StaleFromCache;
             return Response.success(gson.fromJson(json, clazz), parseCacheHeaders(response));
         }
+
         //数据是否有更新
         try {
             if (response.statusCode == 304) {
+                //服务端返回缓存数据
                 cb.fResponseCacheStatus = ResponseCacheStatus.NotModifiedFromServer;
             } else if (response.statusCode == 200) {
                 if (cacheHit) {
+                    //使用本地缓存
                     cb.fResponseCacheStatus = ResponseCacheStatus.FreshFromCache;
                 } else {
+                    //使用服务端更新数据
                     cb.fResponseCacheStatus = ResponseCacheStatus.NewFromServer;
                 }
             } else {

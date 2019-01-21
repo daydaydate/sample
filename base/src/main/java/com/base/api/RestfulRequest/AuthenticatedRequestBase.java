@@ -2,8 +2,6 @@ package com.base.api.RestfulRequest;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.support.annotation.CallSuper;
 import android.util.Log;
 
@@ -19,11 +17,6 @@ import com.base.api.YZ;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * Created by yuanjian on 2017/5/2.
- */
-
 public abstract class AuthenticatedRequestBase<T> extends Request<T> {
     private final static String TAG = "AuthenticatedRequestBase";
     private static final int TIME_OUT = 30000;
@@ -32,6 +25,14 @@ public abstract class AuthenticatedRequestBase<T> extends Request<T> {
     protected Context mContext;
     protected RequestQueue mRequestQueue;
 
+    /**
+     * 创建新的请求，并把请求加入到请求队列requestQueue中
+     *
+     * @param method
+     * @param url
+     * @param cache
+     * @param errorListener
+     */
     @SuppressLint("LongLogTag")
     public AuthenticatedRequestBase(int method, String url, boolean cache, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
@@ -64,7 +65,12 @@ public abstract class AuthenticatedRequestBase<T> extends Request<T> {
         mRequestQueue.add(this);
     }
 
-
+    /**
+     * 重写这个方法，可以在http请求头里面加入token，客户端能接受的数据类型
+     *
+     * @return
+     * @throws AuthFailureError
+     */
     @CallSuper
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
@@ -76,6 +82,12 @@ public abstract class AuthenticatedRequestBase<T> extends Request<T> {
         return headers;
     }
 
+    /**
+     * 网络错误问题统一处理
+     *
+     * @param volleyError
+     * @return
+     */
     @CallSuper
     @Override
     protected VolleyError parseNetworkError(VolleyError volleyError) {

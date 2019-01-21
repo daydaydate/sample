@@ -30,7 +30,6 @@ public class MainActivity extends BaseActivity {
         initView();
     }
 
-
     private void initView() {
         BottomNavigationBar navigationBar = (BottomNavigationBar) findViewById(R.id.main_navigation_bar);
         //模式跟背景的设置都要在添加tab前面，不然不会有效果。
