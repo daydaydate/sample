@@ -1,4 +1,4 @@
-package com.aiidayang.fragment;
+package com.aiidayang.me;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

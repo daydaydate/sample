@@ -1,4 +1,4 @@
-package com.aiidayang.fragment;
+package com.aiidayang.interviewee;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

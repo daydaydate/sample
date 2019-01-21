@@ -8,10 +8,10 @@ import android.util.Log;
 
 import com.aiidayang.R;
 import com.aiidayang.base.BaseActivity;
-import com.aiidayang.fragment.IntervieweeFragment;
-import com.aiidayang.fragment.InterviewerFragment;
-import com.aiidayang.fragment.MeFragment;
-import com.aiidayang.fragment.NewsFragment;
+import com.aiidayang.interviewee.IntervieweeFragment;
+import com.aiidayang.interviewer.InterviewerFragment;
+import com.aiidayang.me.MeFragment;
+import com.aiidayang.news.NewsFragment;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
                 .setMode(BottomNavigationBar.MODE_FIXED)
                 .addItem(new BottomNavigationItem(R.mipmap.navigation1_normal, "interviewer")
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this, R.mipmap.navigation1_select)))
-                .addItem(new BottomNavigationItem(R.mipmap.navigation2_normal, "interviewee")
+                .addItem(new BottomNavigationItem(R.mipmap.navigation2_normal, "com/aiidayang/interviewee")
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this, R.mipmap.navigation2_select)))
                 .addItem(new BottomNavigationItem(R.mipmap.navigation3_normal, "news")
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this, R.mipmap.navigation3_select)))

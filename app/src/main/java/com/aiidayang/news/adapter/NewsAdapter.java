@@ -1,4 +1,4 @@
-package com.aiidayang.adapter;
+package com.aiidayang.news.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -57,7 +57,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsHolder> {
     }
 
 
-    public class NewsHolder extends RecyclerView.ViewHolder {
+    class NewsHolder extends RecyclerView.ViewHolder {
         TextView title, category, author, time;
         ImageView imageView1, imageView2, imageView3;
 
