@@ -21,4 +21,5 @@ public class NewsModel extends BaseNetModel {
         JSONObject jsonObject = new JSONObject();
         addRequest(INetConstant.NEWS, jsonObject, listener, errorListener);
     }
+
 }

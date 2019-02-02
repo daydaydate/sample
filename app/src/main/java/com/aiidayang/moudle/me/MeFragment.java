@@ -1,4 +1,4 @@
-package com.aiidayang.interviewer;
+package com.aiidayang.moudle.me;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,27 +10,20 @@ import android.view.ViewGroup;
 import com.aiidayang.R;
 import com.aiidayang.base.BaseFragment;
 
-public class InterviewerFragment extends BaseFragment {
+public class MeFragment extends BaseFragment {
 
-    private View mView;
+    private View view;
 
-    public InterviewerFragment() {
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public MeFragment() {
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_interviewer, container, false);
-        initView();
-        return mView;
+        view = inflater.inflate(R.layout.fragment_me, container, false);
+
+        return view;
     }
 
-    private void initView() {
-    }
 
 }

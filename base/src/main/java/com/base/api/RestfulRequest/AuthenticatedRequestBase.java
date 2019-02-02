@@ -3,6 +3,7 @@ package com.base.api.RestfulRequest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.CallSuper;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -24,6 +25,7 @@ public abstract class AuthenticatedRequestBase<T> extends Request<T> {
     private static final float BACKOFF_MULT = 2f;
     protected Context mContext;
     protected RequestQueue mRequestQueue;
+    private String mUrl;
 
     /**
      * 创建新的请求，并把请求加入到请求队列requestQueue中
@@ -50,6 +52,11 @@ public abstract class AuthenticatedRequestBase<T> extends Request<T> {
         mContext = YZ.getInstance().getContext();
         if (mContext == null) {
             throw new IllegalArgumentException("mContext can't be null");
+        }
+
+        mUrl = url;
+        if (TextUtils.isEmpty(mUrl)) {
+            throw new IllegalArgumentException("mUrl can't be null");
         }
 
         //如果重新发出服务器请求的时候，需要清除之前的缓存。

@@ -1,4 +1,4 @@
-package com.aiidayang.news.adapter;
+package com.aiidayang.moudle.news.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

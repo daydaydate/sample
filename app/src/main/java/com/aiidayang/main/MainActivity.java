@@ -1,4 +1,4 @@
-package com.aiidayang.activity;
+package com.aiidayang.main;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -8,17 +8,17 @@ import android.util.Log;
 
 import com.aiidayang.R;
 import com.aiidayang.base.BaseActivity;
-import com.aiidayang.interviewee.IntervieweeFragment;
-import com.aiidayang.interviewer.InterviewerFragment;
-import com.aiidayang.me.MeFragment;
-import com.aiidayang.news.NewsFragment;
+import com.aiidayang.moudle.b.BFragment;
+import com.aiidayang.moudle.a.AFragment;
+import com.aiidayang.moudle.me.MeFragment;
+import com.aiidayang.moudle.news.NewsFragment;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 
 public class MainActivity extends BaseActivity {
     private String TAG = this.getClass().getSimpleName();
-    private InterviewerFragment mInterviewerFragment;
-    private IntervieweeFragment mIntervieweeFragment;
+    private AFragment mAFragment;
+    private BFragment mBFragment;
     private NewsFragment mNewsFragment;
     private MeFragment mMeFragment;
 
@@ -37,9 +37,9 @@ public class MainActivity extends BaseActivity {
                 .setActiveColor(R.color.white)
                 .setBarBackgroundColor(R.color.white)
                 .setMode(BottomNavigationBar.MODE_FIXED)
-                .addItem(new BottomNavigationItem(R.mipmap.navigation1_normal, "interviewer")
+                .addItem(new BottomNavigationItem(R.mipmap.navigation1_normal, "a")
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this, R.mipmap.navigation1_select)))
-                .addItem(new BottomNavigationItem(R.mipmap.navigation2_normal, "com/aiidayang/interviewee")
+                .addItem(new BottomNavigationItem(R.mipmap.navigation2_normal, "b")
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this, R.mipmap.navigation2_select)))
                 .addItem(new BottomNavigationItem(R.mipmap.navigation3_normal, "news")
                         .setInactiveIcon(ContextCompat.getDrawable(MainActivity.this, R.mipmap.navigation3_select)))
@@ -56,16 +56,16 @@ public class MainActivity extends BaseActivity {
                 FragmentTransaction transaction = fm.beginTransaction();
                 switch (position) {
                     case 0:
-                        if (mInterviewerFragment == null) {
-                            mInterviewerFragment = new InterviewerFragment();
+                        if (mAFragment == null) {
+                            mAFragment = new AFragment();
                         }
-                        transaction.replace(R.id.container, mInterviewerFragment);
+                        transaction.replace(R.id.container, mAFragment);
                         break;
                     case 1:
-                        if (mIntervieweeFragment == null) {
-                            mIntervieweeFragment = new IntervieweeFragment();
+                        if (mBFragment == null) {
+                            mBFragment = new BFragment();
                         }
-                        transaction.replace(R.id.container, mIntervieweeFragment);
+                        transaction.replace(R.id.container, mBFragment);
                         break;
                     case 2:
                         if (mNewsFragment == null) {
@@ -104,10 +104,10 @@ public class MainActivity extends BaseActivity {
     private void setDefaultFragment() {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        if (mInterviewerFragment == null) {
-            mInterviewerFragment = new InterviewerFragment();
+        if (mAFragment == null) {
+            mAFragment = new AFragment();
         }
-        transaction.replace(R.id.container, mInterviewerFragment);
+        transaction.replace(R.id.container, mAFragment);
         transaction.commit();
     }
 

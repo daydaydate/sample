@@ -49,7 +49,7 @@ public class RequestQueueFactory {
      * @param context
      * @return
      */
-    public synchronized static RequestQueue getRequeQueueRespondInAsyn(
+    public synchronized static RequestQueue getAsynRequeQueueRespond(
             final Context context) {
         if (sAsynRequestQueue == null) {
             sAsynRequestQueue = getAsynRequeQueueRespond(context,
@@ -58,8 +58,8 @@ public class RequestQueueFactory {
         return sAsynRequestQueue;
     }
 
-    public static RequestQueue getAsynRequeQueueRespond(final Context context,
-                                                        int threadPoolSize) {
+    private static RequestQueue getAsynRequeQueueRespond(final Context context,
+                                                         int threadPoolSize) {
         File cacheDir = new File(context.getCacheDir(), "volley_asyn");
         OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
         OkHttpStack stack = new OkHttpStack(okHttpClient);

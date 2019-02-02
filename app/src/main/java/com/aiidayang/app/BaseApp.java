@@ -24,6 +24,7 @@ public class BaseApp extends Application {
         threadPool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
         initNet();
+        initHyphenate();
     }
 
     private void initNet() {
@@ -32,6 +33,9 @@ public class BaseApp extends Application {
 
     public Context getInstance() {
         return applicationContext;
+    }
+
+    public void initHyphenate() {
     }
 
 }

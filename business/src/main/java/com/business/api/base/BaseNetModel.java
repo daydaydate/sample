@@ -6,14 +6,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.business.api.CommonJsonObjectRequest;
 import com.business.api.RequestQueueFactory;
-import com.business.api.constant.INetConstant;
 
 import org.json.JSONObject;
 
 /**
  * 网络处理基类
- *
- * @author mian
  */
 public abstract class BaseNetModel {
 
@@ -23,12 +20,12 @@ public abstract class BaseNetModel {
 
     protected BaseNetModel(Context context) {
         this.context = context.getApplicationContext();
-        requestQueue = RequestQueueFactory.getRequeQueueRespondInAsyn(this.context);
+        requestQueue = RequestQueueFactory.getAsynRequeQueueRespond(this.context);
     }
 
     protected BaseNetModel(Context context, boolean isAsyn) {
         this.context = context.getApplicationContext();
-        requestQueue = isAsyn ? RequestQueueFactory.getRequeQueueRespondInAsyn(this.context)
+        requestQueue = isAsyn ? RequestQueueFactory.getAsynRequeQueueRespond(this.context)
                 : RequestQueueFactory.getRequestQueue(context);
     }
 
