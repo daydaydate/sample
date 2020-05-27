@@ -23,7 +23,7 @@ public class BaseApp extends Application {
         applicationContext = getApplicationContext();
         threadPool = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
 
-        “还是那个冲突吗”
+        String s= "还是那个冲突吗";
         initNet();
         initHyphenate();
     }
